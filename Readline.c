@@ -5,6 +5,7 @@
  * main-prototype
  * Return: 0
  */
+
 int main(void)
 {
 	char *buffer = malloc(1024);
@@ -13,8 +14,14 @@ int main(void)
 	while (1)
 	{
 		printf("$ ");
-		getline(&buffer, &len, stdin);
+		ssize_t result = getline(&buffer, &len, stdin);
+		if (result == -1)
+		{
+		break;
+		}
 		printf("%s", buffer);
 	}
+
+	free(buffer);
 	return (0);
 }
