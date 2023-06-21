@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 #include "main.h"
 
 /**
@@ -26,7 +22,7 @@ int _len(char *buffer)
 void _exec(char **args)
 {
 
-        if (execve(args[0], args, NULL) == -1)
+        if (execve(args[0], args, envp) == -1)
         {
                 perror("Error");
         }
@@ -50,21 +46,36 @@ void _arr(char *buf_cpy, int num)
         args[i] = NULL;
 
         _exec(args);
+
+	/* Free allocated memory *\
+	   for (i = 0; i < num; i++)
+	   {
+	   free(args[i]);
+	   }
+	   free(args);
 }
 
 int main(void)
 {
-        char *buffer = NULL;
+        char *buffer = [256];
         ssize_t result;
         size_t len = 0;
         char *buf_cpy;
-        int num, count;
+        int num;
         /*char *args[] = {"/bin/ls", "-l", "/usr/", NULL};*/
+
+	char *envp[] =
+	{
+		"VAR1=value1",
+                "VAR2=value2",
+                NULL
+        };
 
         while (1)
         {
                 printf("$ ");
-                result = getline(&buffer, &len, stdin);
+                fgets(buffer, 256, stdin);
+		result = strlen(buffer);
                 if (result == -1)
                 {
                         break;
@@ -80,7 +91,6 @@ int main(void)
                 printf("%s\n", buf_cpy);
                 printf("%d\n", num);
 
-                free(buffer);
                 free(buf_cpy);
         }
         return (0);
