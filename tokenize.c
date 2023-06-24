@@ -64,5 +64,9 @@ char **checker(char *buffer)
 	{
 		return (NULL);
 	}
+	else if (access(args[0], F_OK) == -1)
+	{
+		return (NULL);
+	}
 	return (args);
 }
