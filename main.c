@@ -28,20 +28,27 @@ int main(void)
                 }
                 else
                 {
-                        args = tokenize(buffer);
-                        pid = fork();
-                        if (pid == -1)
-                        {
-                                return (-1);
-                        }
-                        if (pid == 0)
-                        {
-                                _exec(args);
-                        }
-                        else
-                        {
-                                wait(NULL);
-                        }
+                        args = checker(buffer);
+			if (args == NULL)
+			{
+				perror("Did not find command");
+			}
+			else
+			{
+                        	pid = fork();
+                        	if (pid == -1)
+                        	{
+                                	return (-1);
+                        	}
+                        	if (pid == 0)
+                        	{
+                                	_exec(args);
+                        	}
+                        	else
+                        	{
+                                	wait(NULL);
+                        	}
+			}
                 }
                 free(buffer);
                 free(args);

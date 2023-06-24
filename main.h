@@ -7,4 +7,5 @@ char *_strdup(char *str);
 int _len(char *buffer);
 void _exec(char **args);
 char **tokenize(char *buffer);
+char **checker(char *buffer);
 #endif

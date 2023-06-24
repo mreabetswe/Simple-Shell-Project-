@@ -55,3 +55,14 @@ char **tokenize(char *buffer)
 
         return (args);
 }
+char **checker(char *buffer)
+{
+	char **args;
+
+	args = tokenize(buffer);
+	if ((*args)[0] != '/')
+	{
+		return (NULL);
+	}
+	return (args);
+}
