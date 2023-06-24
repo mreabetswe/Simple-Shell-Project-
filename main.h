@@ -5,7 +5,7 @@ int _strlen(char *str);
 char *_strncat(char *dest, char *src, int n);
 char *_strdup(char *str);
 int _len(char *buffer);
-void _exec(char **args);
+void _exec(char **args, char **envp);
 char **tokenize(char *buffer);
 char **checker(char *buffer);
 #endif

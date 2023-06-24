@@ -10,12 +10,11 @@
  * main - runs simple shell
  * Return: Always (0)
  */
-int main(void)
+int main(int argc, char **args, char **envp)
 {
         char *buffer = NULL;
         ssize_t result;
         size_t len = 0;
-        char **args;
         pid_t pid;
 
         while (1)
@@ -42,7 +41,7 @@ int main(void)
                         	}
                         	if (pid == 0)
                         	{
-                                	_exec(args);
+                                	_exec(args, envp);
                         	}
                         	else
                         	{

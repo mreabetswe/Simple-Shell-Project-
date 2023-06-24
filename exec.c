@@ -12,11 +12,10 @@
  * Return: void
  */
 
-void _exec(char **args)
+void _exec(char **args, char **envp)
 {
-        extern char **environ;
 
-        if (execve(args[0], args, environ) == -1)
+        if (execve(args[0], args, envp) == -1)
         {
                 perror("Error ");
         }
