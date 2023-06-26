@@ -10,12 +10,14 @@
  * main - runs simple shell
  * Return: Always (0)
  */
-int main(int argc, char **args, char **envp)
+int main(void)
 {
         char *buffer = NULL;
         ssize_t result;
         size_t len = 0;
         pid_t pid;
+	char **args;
+	char **envp = environ;
 
         while (1)
         {
@@ -27,7 +29,7 @@ int main(int argc, char **args, char **envp)
                 }
                 else
                 {
-                        args = checker(buffer);
+                        args = checker(envp, buffer);
 			if (args == NULL)
 			{
 				perror("Did not find command");
@@ -49,8 +51,8 @@ int main(int argc, char **args, char **envp)
                         	}
 			}
                 }
-                free(buffer);
-                free(args);
         }
+	free(buffer);
+	free(args);
         return (0);
 }

@@ -14,6 +14,7 @@
 
 void _exec(char **args, char **envp)
 {
+	envp = environ;
 
         if (execve(args[0], args, envp) == -1)
         {

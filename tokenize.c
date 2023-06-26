@@ -22,6 +22,7 @@ int _len(char *buffer)
                 num++;
                 lines = strtok(NULL, " ");
         }
+	num++;
         return (num);
 }
 
@@ -40,13 +41,13 @@ char **tokenize(char *buffer)
 
         buf_cpy = _strdup(buffer);
         num = _len(buffer);
-        args = malloc(sizeof(char *) * num);
+        args = malloc(sizeof(char *) * (num + 1));
 
         token = strtok(buf_cpy, " \n");
         len = _strlen(token);
         for (i = 0; token != NULL; i++)
         {
-                args[i] = malloc(sizeof(char) * len);
+                args[i] = malloc(sizeof(char) * (len + 1));
                 args[i] = _strcpy(args[i], token);
                 token = strtok(NULL, " \n");
         }
@@ -55,18 +56,31 @@ char **tokenize(char *buffer)
 
         return (args);
 }
-char **checker(char *buffer)
+char **checker(char **envp, char *buffer)
 {
 	char **args;
+	char *new;
+	int i;
 
+	envp = environ;
 	args = tokenize(buffer);
 	if ((*args)[0] != '/')
 	{
-		return (NULL);
+		new = command(envp, args[0]);
+		i = _strlen(new);
+		args[0] = malloc(sizeof(char) * (i + 1));
+		args[0] = new;
+		if (access(args[0], F_OK) == -1)
+		{
+			return (NULL);
+		}
 	}
-	else if (access(args[0], F_OK) == -1)
+	else if ((*args)[0] == '/')
 	{
-		return (NULL);
+		if (access(args[0], F_OK) == -1)
+		{
+			return (NULL);
+		}
 	}
 	return (args);
 }
